@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "post-comments": {
+      ".read": true
+    }
+  }
+}
