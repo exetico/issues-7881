@@ -5,7 +5,7 @@ const { onTaskDispatched } = require("firebase-functions/v2/tasks");
 
 admin.initializeApp();
 
-const region_input = "europe-west";
+const region_input = "europe-west1";
 
 exports.testOnRequest = onRequest(	{
     region: region_input
