@@ -5,14 +5,22 @@ const { onTaskDispatched } = require("firebase-functions/v2/tasks");
 
 admin.initializeApp();
 
+const region_input = "europe-west";
 
-exports.testOnRequest = onRequest(async (request, response) => {
+exports.testOnRequest = onRequest(	{
+    region: region_input
+},
+async (request, response) => {
+
+    // console.log("Process env", process.env);
     const taskPayload = {
         foo: "bar",
     };
     const targetUri = "testOnTaskDispatched";
 
     const queue = getFunctions().taskQueue(targetUri);
+
+    // console.log("Queue", queue);
 
     try {
         await queue.enqueue(taskPayload);
@@ -24,7 +32,9 @@ exports.testOnRequest = onRequest(async (request, response) => {
     response.send("Hello from HTTP ON REQUEST!");
 });
 
-exports.testOnTaskDispatched = onTaskDispatched((request) => {
+exports.testOnTaskDispatched = onTaskDispatched({
+    region: region_input
+}, (request) => {
     console.info("Hello logs from TASKS ON TASK DISPATCHED!", {
         foo: request.data,
     });
